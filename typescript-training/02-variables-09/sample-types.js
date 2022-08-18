@@ -10,4 +10,4 @@ firstName = 1;
 console.log(found);
 console.log('Hi ' + firstName + ' ' + lastName);
 //use template strings 
-console.log("Hi ".concat(firstName));
+console.log("Hi ".concat(firstName, " ").concat(lastName));

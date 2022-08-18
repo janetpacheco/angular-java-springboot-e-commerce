@@ -13,4 +13,4 @@ console.log(found);
 console.log('Hi ' + firstName + ' ' + lastName);
 
 //use template strings 
-console.log(`Hi ${firstName}`);
+console.log(`Hi ${firstName} ${lastName}`);
