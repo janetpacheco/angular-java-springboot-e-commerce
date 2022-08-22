@@ -1,7 +1,9 @@
 class Customer{
+    // properties
     firstName: string;
     lastName : string; 
     
+    //constructors
     constructor(firstName : string, lastName : string){
         this.firstName = firstName;
         this.lastName = lastName;
