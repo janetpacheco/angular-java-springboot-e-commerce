@@ -1,4 +1,5 @@
 var Customer = /** @class */ (function () {
+    //constructors
     function Customer(firstName, lastName) {
         this.firstName = firstName;
         this.lastName = lastName;
