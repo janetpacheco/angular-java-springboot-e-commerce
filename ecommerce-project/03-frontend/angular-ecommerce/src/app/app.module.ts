@@ -10,6 +10,7 @@ import { ProductCategoryMenuComponent } from './components/product-category-menu
 
 // 1. Define your routes going from the most specific to the most generic
 const routes: Routes =[
+  {path:'search/:keyword', component: ProductListComponent},
   {path: 'category/:id/:name',component: ProductListComponent},
   {path: 'category',component: ProductListComponent},
   {path: 'products',component: ProductListComponent},
