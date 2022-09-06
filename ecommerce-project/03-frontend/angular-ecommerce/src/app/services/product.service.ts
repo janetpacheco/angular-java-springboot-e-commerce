@@ -9,14 +9,15 @@ import { map } from 'rxjs/operators'
 })
 export class ProductService {
   //url for spring boot rest api
-  private baseUrl = 'http://localhost:8080/api/products?size=100';
+  private baseUrl = 'http://localhost:8080/api/products';
 
   constructor(private httpClient : HttpClient ) { }
 
   getProductList(theCategoryId : number ): Observable<Product[]>{
-    // @ToDo build URL based on cetgory id ... 
-
-    return this.httpClient.get<GetResponse>(this.baseUrl).pipe(
+    // build URL based on cetgory id ... 
+    const searchUrl = `${this.baseUrl}/search/findByCategoryId?id=${theCategoryId}`;
+    
+    return this.httpClient.get<GetResponse>(searchUrl).pipe(
       map(response=> response._embedded.products )
     );
   }
