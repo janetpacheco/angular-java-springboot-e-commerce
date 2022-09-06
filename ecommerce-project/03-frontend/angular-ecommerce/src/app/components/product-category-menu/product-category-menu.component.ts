@@ -9,7 +9,7 @@ import { ProductService } from 'src/app/services/product.service';
 })
 export class ProductCategoryMenuComponent implements OnInit {
   
-  constructor(private productService : ProductService[]) { }
+  constructor(private productService : ProductService) { }
 
   productCategories : ProductCategory[] = [];
   
@@ -18,8 +18,9 @@ export class ProductCategoryMenuComponent implements OnInit {
   }
 
   listProductCategories() {
+
     this.productService.getProductCategories().subscribe(
-      data=>{
+      data =>{
         console.log('Product Categories ='+ JSON.stringify(data));
         this.productCategories = data;
       }
