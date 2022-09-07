@@ -8,7 +8,7 @@ import { ProductCategory } from '../common/product-category';
 @Injectable({
   providedIn: 'root'
 })
-export class ProductService {
+export class ProductService { 
   //url for spring boot rest api
   private baseUrl = 'http://localhost:8080/api/products';
   private categoryUrl = 'http://localhost:8080/api/product-category';
@@ -29,6 +29,12 @@ export class ProductService {
       map(response=> response._embedded.productCategory )
     );
   }
+
+  searchProducts(theKeyword: string) {
+    throw new Error('Method not implemented.');
+  }
+
+  
 }
 
 interface GetResponseProducts{
