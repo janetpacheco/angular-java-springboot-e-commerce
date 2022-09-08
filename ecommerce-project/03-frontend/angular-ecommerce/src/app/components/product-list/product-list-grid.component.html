@@ -47,20 +47,24 @@
 
 
                             </div>
+
+                            <div class ="col-md-3 mt-2" style="text-align: right; ">
+                                 <!--S1 Add drop-down list for page size-->
+                                <span class = "mr-2">Page Size</span>
+                                <select #myPageSelect (change) = "updatePageSize(myPageSelect.value)">
+                                    <option selected="true">5</option>
+                                    <option>10</option>
+                                    <option>20</option>
+                                    <option>30</option>
+                                </select>
+                            </div>
+
                         </div>
                     </div>
 
                 </div>
             </div>
             <!--End footer-->
-            <!--S1 Add drop-down list for page size-->
-            <span class = "mr-2">Page Size</span>
-            <select #myPageSelect (change) = "updatePageSize(myPageSelect.value)">
-                <option selected="true">5</option>
-                <option>10</option>
-                <option>20</option>
-            </select>
-
         </div>
     </div>
 </div>
