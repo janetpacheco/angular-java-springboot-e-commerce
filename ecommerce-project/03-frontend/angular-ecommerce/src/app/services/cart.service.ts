@@ -58,7 +58,7 @@ export class CartService {
       console.log(`name: ${tempCarItem.name}, quantity: ${tempCarItem.quantity}, unitPrice: ${tempCarItem.unitPrice}, subTotalPrice: ${subTotalPrice}`);
     }
 
-    console.log(`totalPrice: ${totalPriceValue.toFixed(2)}, totalQuantity: ${totalPriceValue}`)
+    console.log(`totalPrice: ${totalPriceValue.toFixed(2)}, totalQuantity: ${totalQuantityValue}`)
     console.log('-----------')
   }
 }
