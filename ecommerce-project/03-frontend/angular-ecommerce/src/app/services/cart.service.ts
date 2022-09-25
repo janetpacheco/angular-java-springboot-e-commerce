@@ -36,6 +36,29 @@ export class CartService {
 
   }
   computeCartTotals() {
-    throw new Error('Method not implemented.');
+    let totalPriceValue : number = 0;
+    let totalQuantityValue : number =0;
+    
+    for(let currentCartItem of this.cartItems){
+      totalPriceValue += currentCartItem.unitPrice * currentCartItem.quantity;
+      totalQuantityValue += currentCartItem.quantity;
+    }
+
+    // publish the new values all the susbcribers will receive the new data
+    this.totalPrice.next(totalPriceValue);
+    this.totalQuantity.next(totalQuantityValue);
+
+    this.logCartData(totalPriceValue, totalQuantityValue);
+  }
+
+  logCartData(totalPriceValue: number, totalQuantityValue: number) {
+    console.log('Content of the cart');
+    for(let tempCarItem of this.cartItems){
+      const subTotalPrice = tempCarItem.quantity * tempCarItem.unitPrice;
+      console.log(`name: ${tempCarItem.name}, quantity: ${tempCarItem.quantity}, unitPrice: ${tempCarItem.unitPrice}, subTotalPrice: ${subTotalPrice}`);
+    }
+
+    console.log(`totalPrice: ${totalPriceValue.toFixed(2)}, totalQuantity: ${totalPriceValue}`)
+    console.log('-----------')
   }
 }
