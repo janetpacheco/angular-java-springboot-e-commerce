@@ -1,6 +1,8 @@
 <div class ="main-content">
     <div class ="selection-content section-content-p30">
         <div class = "container-fluid">
+
+            <div *ngIf="cartItems.length > 0">
             <table class="table table-bordered">
                 <tr>
                     <th width="20%">Product Image</th>
@@ -32,6 +34,13 @@
                     </td>
                 </tr>
             </table>
+
+            </div>
+            <!--if the cart is empty display a message-->
+            <div *ngIf="cartItems.length == 0" class="alert alert-warning col-md-12" role="alert">
+                Your shopping cart is empty.
+            </div>
+
         </div>
     </div>
 </div>
