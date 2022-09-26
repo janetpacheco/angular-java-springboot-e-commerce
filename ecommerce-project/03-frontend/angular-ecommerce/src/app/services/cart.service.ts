@@ -16,14 +16,22 @@ export class CartService {
     let alreadyExistsInCart: boolean = false ;
     let existingCartItem: CartItem = undefined;
 
-    for(let tempCartItem of this.cartItems){
-      if (tempCartItem.id === theCartItem.id){
-        existingCartItem === theCartItem;
-        break;
-      }
-    }
+    if (this.cartItems.length > 0){
+
+    // traditional way to declare a flow loop
+    // for(let tempCartItem of this.cartItems){
+    //   if (tempCartItem.id === theCartItem.id){
+    //     existingCartItem = theCartItem;
+    //     break;
+    //   }
+    // }
+
+    existingCartItem = this.cartItems.find(tempCartItem => tempCartItem.id === theCartItem.id);
+
 
     alreadyExistsInCart = (existingCartItem != undefined);
+
+    }
 
     if(alreadyExistsInCart){
       existingCartItem.quantity++;
