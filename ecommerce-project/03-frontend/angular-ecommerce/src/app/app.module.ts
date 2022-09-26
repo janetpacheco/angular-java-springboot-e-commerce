@@ -16,6 +16,7 @@ import { CartDetailsComponent } from './components/cart-details/cart-details.com
 
 // 1. Define your routes going from the most specific to the most generic
 const routes: Routes =[
+  {path:'cart-details', component: CartDetailsComponent},
   {path:'products/:id', component: ProductDetailsComponent},
   {path:'search/:keyword', component: ProductListComponent},
   {path: 'category/:id/:name',component: ProductListComponent},
