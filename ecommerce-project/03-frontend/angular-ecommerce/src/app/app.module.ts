@@ -17,6 +17,7 @@ import { CheckoutComponent } from './components/checkout/checkout.component';
 
 // 1. Define your routes going from the most specific to the most generic
 const routes: Routes =[
+  {path:'checkout', component: CheckoutComponent},
   {path:'cart-details', component: CartDetailsComponent},
   {path:'products/:id', component: ProductDetailsComponent},
   {path:'search/:keyword', component: ProductListComponent},
