@@ -84,8 +84,15 @@
                     </div>
 
                 </div>
+                <!-- Add check box to make the shipping address the same as billing address -->
+                <div class="input-space">
+                    <label class="au-checkbox">
+                        <input type="checkbox" (change)="copyShippingAdressToBillingAddress($event)">
+                        <span class="au-checkmark"></span> Billing Address same as Shipping Address
+                    </label>
+                </div>
                 <!-- Billing address -->
-                <div formGroupName="shippingAddress" class="form-area">
+                <div formGroupName="billingAddress" class="form-area">
                     <h3>Billing Address</h3>
 
                     <div class="row">
@@ -138,7 +145,7 @@
 
 
                 <!-- Credit card info -->
-                <div formGroupName="shippingAddress" class="form-area">
+                <div formGroupName="creditCardInfo" class="form-area">
                     <h3>Credit Card Information</h3>
 
                     <div class="row">
