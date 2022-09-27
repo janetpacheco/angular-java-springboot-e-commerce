@@ -19,7 +19,7 @@ export class CheckoutComponent implements OnInit {
   creditCardYears: number[] = [];
   creditCardMonths: number[] = [];
 
-  countries: Country[]=[];
+  countries: Country[]=[];  
 
   shippingAddressStates: State[] = [];
   billingAddressStates: State[] = [];
