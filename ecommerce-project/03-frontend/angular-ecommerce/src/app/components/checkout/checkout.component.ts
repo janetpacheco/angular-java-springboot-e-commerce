@@ -1,5 +1,6 @@
 import { Component, OnInit } from '@angular/core';
 import { FormBuilder, FormGroup } from '@angular/forms';
+import { HuskyShopFormService } from 'src/app/services/husky-shop-form-service.service';
 
 @Component({
   selector: 'app-checkout',
@@ -12,7 +13,11 @@ export class CheckoutComponent implements OnInit {
   totalPrice: number= 0.00;
   totalQuantity: number= 0;
 
-  constructor(private formBuilder: FormBuilder) { }
+  creditCardYears: number[] = [];
+  creditCardMonths: number[] = [];
+
+  constructor(private formBuilder: FormBuilder,
+              private huskyShopFormService: HuskyShopFormService ) { }
 
   ngOnInit(): void {
 
@@ -50,7 +55,27 @@ export class CheckoutComponent implements OnInit {
         })
       }
     );
+
+    const startMonth: number = new Date().getMonth() + 1;
+    console.log("start month: "+ startMonth);
+
+    this.huskyShopFormService.getCreditCardMonths(startMonth).subscribe(
+      data => {
+        console.log("retrieve credit card months: " + JSON.stringify(data));
+        this.creditCardMonths = data;
+      }
+    );
+
+    this.huskyShopFormService.getCreditCardYears().subscribe(
+      data => {
+        console.log("retrieve credit card years: " + JSON.stringify(data));
+        this.creditCardYears = data;
+      }
+    );
+
   }
+
+
 
   copyShippingAdressToBillingAddress(event){
 
