@@ -17,15 +17,15 @@ export class HuskyShopFormService {
 
   getCountries(): Observable<Country[]>{
     return this.httpClient.get<GetResponseCountries>(this.countriesUrl).pipe(
-      map(response => response._embedded.countries)
-       
+      map(response => response._embedded.countries)      
       );
   }
 
   getStates(theCountryCode: string): Observable<State[]>{
     const searchStateUrl = `${this.statesUrl}/search/findByCountryCode?code=${theCountryCode}`;
     return  this.httpClient.get<GetResponseStates>(searchStateUrl).pipe(
-      map(response => response._embedded.states);
+      map(response => response._embedded.states)
+      );
   }
 
 
