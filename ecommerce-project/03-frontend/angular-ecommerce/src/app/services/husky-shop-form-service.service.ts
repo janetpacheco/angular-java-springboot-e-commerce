@@ -1,7 +1,8 @@
 import { HttpClient } from '@angular/common/http';
 import { Injectable } from '@angular/core';
-import { map, Observable, of } from 'rxjs';
+import { Observable, of } from 'rxjs';
 import { Country } from '../common/country';
+import { map } from 'rxjs/operators';
 import { State } from '../common/state';
 
 @Injectable({
@@ -21,11 +22,14 @@ export class HuskyShopFormService {
       );
   }
 
-  getStates(theCountryCode: string): Observable<State[]>{
-    const searchStateUrl = `${this.statesUrl}/search/findByCountryCode?code=${theCountryCode}`;
-    return  this.httpClient.get<GetResponseStates>(searchStateUrl).pipe(
+  getStates(theCountryCode: string): Observable<State[]> {
+
+    // search url
+    const searchStatesUrl = `${this.statesUrl}/search/findByCountryCode?code=${theCountryCode}`;
+
+    return this.httpClient.get<GetResponseStates>(searchStatesUrl).pipe(
       map(response => response._embedded.states)
-      );
+    );
   }
 
 
