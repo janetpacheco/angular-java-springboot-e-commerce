@@ -120,7 +120,6 @@ export class CheckoutComponent implements OnInit {
     );
   }
 
-
   copyShippingAdressToBillingAddress(event){
 
     if(event.target.checked){
