@@ -123,11 +123,16 @@ export class CheckoutComponent implements OnInit {
   get email(){ return this.checkoutFormGroup.get('customer.email');}
 
   get shippingAddressCountry(){ return this.checkoutFormGroup.get('shippingAddress.country');} 
-
   get shippingAddressStreet(){ return this.checkoutFormGroup.get('shippingAddress.street');}
   get shippingAddressCity(){ return this.checkoutFormGroup.get('shippingAddress.city');}                   
   get shippingAddressState(){ return this.checkoutFormGroup.get('shippingAddress.state');}
   get shippingAddressZipCode(){ return this.checkoutFormGroup.get('shippingAddress.zipCode');}
+
+  get billingAddressCountry(){ return this.checkoutFormGroup.get('billingAddress.country');} 
+  get billingAddressStreet(){ return this.checkoutFormGroup.get('billingAddress.street');}
+  get billingAddressCity(){ return this.checkoutFormGroup.get('billingAddress.city');}                   
+  get billingAddressState(){ return this.checkoutFormGroup.get('billingAddress.state');}
+  get billingAddressZipCode(){ return this.checkoutFormGroup.get('billingAddress.zipCode');}
 
 
   handleMonthsAndYears(){
@@ -183,6 +188,10 @@ export class CheckoutComponent implements OnInit {
     
     console.log("The shipping address country is " + this.checkoutFormGroup.get('shippingAddress').value.country.name);
     console.log("The shipping address state is " + this.checkoutFormGroup.get('shippingAddress').value.state.name);
+
+    console.log("The billing address country is " + this.checkoutFormGroup.get('billingAddress').value.country.name);
+    console.log("The billing address state is " + this.checkoutFormGroup.get('billingAddress').value.state.name);
+
   
   }  
 
