@@ -48,19 +48,37 @@ export class CheckoutComponent implements OnInit {
         }),
 
         shippingAddress : this.formBuilder.group({
-          country: [''],
-          street: [''],
-          city: [''],
-          state: [''],
-          zipCode: ['']
+          country: new FormControl('',Validators.required),
+          street: new FormControl('',[Validators.required,
+                                      Validators.minLength(2),
+                                      HuskyShopValidators.notOnlyWhitespace]),
+                           
+          city: new FormControl('',[Validators.required,
+                                    Validators.minLength(2),
+                                    HuskyShopValidators.notOnlyWhitespace]),
+                           
+          state: new FormControl('',Validators.required),
+          zipCode: new FormControl('',[Validators.required,
+                                      Validators.minLength(2),
+                                      HuskyShopValidators.notOnlyWhitespace]),
+                           
         }),
 
         billingAddress : this.formBuilder.group({
-          country: [''],
-          street: [''],
-          city: [''],
-          state: [''],
-          zipCode: ['']
+          country: new FormControl('',Validators.required),
+          street: new FormControl('',[Validators.required,
+                                      Validators.minLength(2),
+                                      HuskyShopValidators.notOnlyWhitespace]),
+                           
+          city: new FormControl('',[Validators.required,
+                                    Validators.minLength(2),
+                                    HuskyShopValidators.notOnlyWhitespace]),
+                           
+          state: new FormControl('',Validators.required),
+          zipCode: new FormControl('',[Validators.required,
+                                      Validators.minLength(2),
+                                      HuskyShopValidators.notOnlyWhitespace])
+                           
         }),
 
         creditCardInfo : this.formBuilder.group({
@@ -103,6 +121,13 @@ export class CheckoutComponent implements OnInit {
   get firstName(){ return this.checkoutFormGroup.get('customer.firstName');}
   get lastName(){ return this.checkoutFormGroup.get('customer.lastName');}
   get email(){ return this.checkoutFormGroup.get('customer.email');}
+
+  get shippingAddressCountry(){ return this.checkoutFormGroup.get('shippingAddress.country');} 
+
+  get shippingAddressStreet(){ return this.checkoutFormGroup.get('shippingAddress.street');}
+  get shippingAddressCity(){ return this.checkoutFormGroup.get('shippingAddress.city');}                   
+  get shippingAddressState(){ return this.checkoutFormGroup.get('shippingAddress.state');}
+  get shippingAddressZipCode(){ return this.checkoutFormGroup.get('shippingAddress.zipCode');}
 
 
   handleMonthsAndYears(){
