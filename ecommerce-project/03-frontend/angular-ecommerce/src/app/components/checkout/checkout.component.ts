@@ -37,7 +37,7 @@ export class CheckoutComponent implements OnInit {
           lastName: new FormControl('',[Validators.required,Validators.minLength(2)]),
           email: new FormControl('',
                                 [Validators.required,
-                                 Validators.pattern('^[a-z0-9._%+-]+@[a-z0-9.-]\\.[a-z]{2,4}$')])
+                                 Validators.pattern('^[a-z0-9._%+-]+@[a-z0-9.-]+\.[a-z]{2,4}$')])
         }),
 
         shippingAddress : this.formBuilder.group({
@@ -143,6 +143,9 @@ export class CheckoutComponent implements OnInit {
 
   onSubmit(){
     console.log("Handling the submit button");
+    if (this.checkoutFormGroup.invalid){
+      this.checkoutFormGroup.markAllAsTouched();
+    }
     console.log(this.checkoutFormGroup.get('customer').value)
     console.log("The email address is "+ this.checkoutFormGroup.get('customer').value.email);
     
