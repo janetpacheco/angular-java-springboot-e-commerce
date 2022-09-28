@@ -129,6 +129,14 @@ export class CheckoutComponent implements OnInit {
     );
 
   }
+  reviewCartDetails() {
+    // subcribe to cartService total quantity and price
+    this.cartService.totalPrice.subscribe(
+      totalPrice => this.totalPrice = this.totalPrice
+    );
+    this.cartService.totalQuantity.subscribe(
+      totalQuantity => this.totalQuantity = this.totalQuantity);
+  }
 
   get firstName(){ return this.checkoutFormGroup.get('customer.firstName');}
   get lastName(){ return this.checkoutFormGroup.get('customer.lastName');}
