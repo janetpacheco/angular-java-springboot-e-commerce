@@ -82,10 +82,18 @@ export class CheckoutComponent implements OnInit {
         }),
 
         creditCardInfo : this.formBuilder.group({
-          cardType: [''],
-          cardName: [''],
-          cardNumber: [''],
-          securityCode: [''],
+          cardType: new FormControl('',Validators.required),
+          cardName: new FormControl('',[Validators.required,
+                                        Validators.minLength(2),
+                                        HuskyShopValidators.notOnlyWhitespace]),
+
+          cardNumber: new FormControl('',[Validators.required,
+                                          Validators.pattern('[0-9]{16}'),
+                                          HuskyShopValidators.notOnlyWhitespace]),
+
+          securityCode: new FormControl('',[Validators.required,
+                                            Validators.pattern('[0-9]{3}'),                                            
+                                            HuskyShopValidators.notOnlyWhitespace]),
           expMonth: [''],
           expYear: ['']
         })
@@ -134,6 +142,12 @@ export class CheckoutComponent implements OnInit {
   get billingAddressState(){ return this.checkoutFormGroup.get('billingAddress.state');}
   get billingAddressZipCode(){ return this.checkoutFormGroup.get('billingAddress.zipCode');}
 
+  get creditCardType(){ return this.checkoutFormGroup.get('creditCardInfo.cardType');}
+  get creditCardName(){ return this.checkoutFormGroup.get('creditCardInfo.cardName');}
+  get creditCardNumber(){ return this.checkoutFormGroup.get('creditCardInfo.cardNumber');}
+  get creditSecurityCode(){ return this.checkoutFormGroup.get('creditCardInfo.securityCode');}
+
+  
 
   handleMonthsAndYears(){
     const creditCardFormGroup = this.checkoutFormGroup.get('creditCardInfo');
