@@ -132,10 +132,10 @@ export class CheckoutComponent implements OnInit {
   reviewCartDetails() {
     // subcribe to cartService total quantity and price
     this.cartService.totalPrice.subscribe(
-      totalPrice => this.totalPrice = this.totalPrice
+      totalPrice => this.totalPrice = totalPrice
     );
     this.cartService.totalQuantity.subscribe(
-      totalQuantity => this.totalQuantity = this.totalQuantity);
+      totalQuantity => this.totalQuantity = totalQuantity);
   }
 
   get firstName(){ return this.checkoutFormGroup.get('customer.firstName');}
