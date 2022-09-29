@@ -159,18 +159,7 @@ export class CheckoutComponent implements OnInit {
   get creditCardNumber(){ return this.checkoutFormGroup.get('creditCardInfo.cardNumber');}
   get creditSecurityCode(){ return this.checkoutFormGroup.get('creditCardInfo.securityCode');}
 
-  
-
-  reviewCartDetails() {
-    // subcribe to cartService total quantity and price
-    this.cartService.totalPrice.subscribe(
-      totalPrice => this.totalPrice = this.totalPrice
-    );
-    this.cartService.totalQuantity.subscribe(
-      totalQuantity => this.totalQuantity = this.totalQuantity);
-  }
-
-  handleMonthsAndYears(){
+   handleMonthsAndYears(){
     const creditCardFormGroup = this.checkoutFormGroup.get('creditCardInfo');
     const currentYear : number = new Date().getFullYear();
     const selectedYear : number = Number(creditCardFormGroup.value.expYear);
