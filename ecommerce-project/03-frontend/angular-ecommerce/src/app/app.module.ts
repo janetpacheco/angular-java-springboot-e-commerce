@@ -16,6 +16,7 @@ import { CartDetailsComponent } from './components/cart-details/cart-details.com
 import { CheckoutComponent } from './components/checkout/checkout.component';
 import { ReactiveFormsModule } from '@angular/forms';
 import { LoginComponent } from './components/login/login.component';
+import { LoginStatusComponent } from './components/login-status/login-status.component';
 
 // 1. Define your routes going from the most specific to the most generic
 const routes: Routes =[
@@ -41,7 +42,8 @@ const routes: Routes =[
     CartStatusComponent,
     CartDetailsComponent,
     CheckoutComponent,
-    LoginComponent
+    LoginComponent,
+    LoginStatusComponent
   ],
   imports: [
     RouterModule.forRoot(routes),
