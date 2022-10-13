@@ -1,0 +1,11 @@
+.security-btn-submit{
+    position:relative;
+    right:10px;
+    min-width:85px;
+    color:#fff;
+    border:10px solid #208d22;
+    -webkit-border-radius:3px;
+    -moz-border-radius:3px;
+    border-radius:0;
+    background:#258d20
+}
