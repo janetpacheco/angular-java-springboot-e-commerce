@@ -103,4 +103,8 @@ export class CartService {
     console.log(`totalPrice: ${totalPriceValue.toFixed(2)}, totalQuantity: ${totalQuantityValue}`)
     console.log('-----------')
   }
+
+  persistCartItems(){(
+    this.storage.setItem('cartItems',JSON.stringify(this.cartItems)));
+  }
 }
