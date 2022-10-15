@@ -39,6 +39,9 @@ public class MyDataRestConfig implements RepositoryRestConfigurer {
 
         // call an internal helper method
         exposeIds(config);
+
+        //CONFIGURE CORS MAPPING
+        cors.addMapping("/api/**").allowedOrigins("http://localhost:4200");
     }
 
     private static void disableHttpMethods(Class theClass, RepositoryRestConfiguration config, HttpMethod[] theUnsupportedActions) {
