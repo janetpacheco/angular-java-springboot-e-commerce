@@ -1,9 +1,6 @@
 package com.huskycode.ecommerce.config;
 
-import com.huskycode.ecommerce.entity.Country;
-import com.huskycode.ecommerce.entity.Product;
-import com.huskycode.ecommerce.entity.ProductCategory;
-import com.huskycode.ecommerce.entity.State;
+import com.huskycode.ecommerce.entity.*;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.beans.factory.annotation.Value;
 import org.springframework.context.annotation.Configuration;
@@ -34,11 +31,12 @@ public class MyDataRestConfig implements RepositoryRestConfigurer {
         RepositoryRestConfigurer.super.configureRepositoryRestConfiguration(config, cors);
         HttpMethod[] theUnsupportedActions = {HttpMethod.DELETE,HttpMethod.PUT,HttpMethod.POST,HttpMethod.PATCH};
 
-        // disable http methods for product : put,post and delete
+        // disable http methods for product : put,post and delete => read only
         disableHttpMethods(Product.class,config, theUnsupportedActions);
         disableHttpMethods(ProductCategory.class,config, theUnsupportedActions);
         disableHttpMethods(Country.class,config, theUnsupportedActions);
         disableHttpMethods(State.class,config, theUnsupportedActions);
+        disableHttpMethods(Order.class,config,theUnsupportedActions);
 
         // call an internal helper method
         exposeIds(config);
