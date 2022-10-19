@@ -26,11 +26,17 @@ import { OktaAuthGuard,
 import {OktaAuth} from '@okta/okta-auth-js';
 import myAppConfig from './config/my-app-config';
 import { MembersPageComponent } from './components/members-page/members-page.component';
+import { OrderHistoryComponent } from './components/order-history/order-history.component';
 
 const oktaConfig = myAppConfig.oidc;
 const oktaAuth = new OktaAuth(oktaConfig);
 
 function onAuthRequired(oktaAuth, injector) {
+  // Use injector to access any service available within your application
+  const router = injector.get(Router);
+}
+
+function sendToLoginPage(oktaAuth: OktaAuth, injector: Injector) {
   // Use injector to access any service available within your application
   const router = injector.get(Router);
 
@@ -52,8 +58,10 @@ function onAuthRequired(oktaAuth, injector) {
 
 // 1. Define your routes going from the most specific to the most generic
 const routes: Routes =[
+  {path:'order-history',component:OrderHistoryComponent,canActivate:[OktaAuthGuard],
+                        data:{onAuthRequired:sendToLoginPage}},
   {path:'members', component: MembersPageComponent,canActivate:[OktaAuthGuard],
-                   data:{onAuthRequired}},
+                   data:{onAuthRequired:sendToLoginPage}},
   {path:'login/callback', component: OktaCallbackComponent},
   {path:'login', component: LoginComponent},
   {path: 'checkout', component: CheckoutComponent},
@@ -80,6 +88,7 @@ const routes: Routes =[
     LoginComponent,
     LoginStatusComponent,
     MembersPageComponent,
+    OrderHistoryComponent,
   ],
   imports: [
     RouterModule.forRoot(routes),
