@@ -17,6 +17,7 @@ import java.util.Set;
 
 
 @Configuration
+
 public class MyDataRestConfig implements RepositoryRestConfigurer {
     @Value("${allowed.origins}")
     private String[] theAllowedOrigins;
