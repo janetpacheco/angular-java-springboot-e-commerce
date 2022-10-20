@@ -4,7 +4,7 @@
 
 export const environment = {
   production: false,
-  huskycodeApiUrl: "https://localhost:8443/api"
+  huskycodeApiUrl: "https://localhost:9898/api"
 };
 
 /*
