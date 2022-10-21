@@ -9,9 +9,9 @@ import { OrderHistory } from '../common/order-history';
 })
 export class OrderHistoryService {
 
-  private ordersUrl = environment.huskycodeApiUrl + "/api/orders";
+  private ordersUrl = environment.huskycodeApiUrl + "/orders";
 
-  constructor(private httpClient : HttpClient) { }
+  constructor(private httpClient : HttpClient) { }  
 
   getOrderHistory(theEmail : string): Observable<GetResponseOrderHistory>{
 
