@@ -4,7 +4,8 @@
 
 export const environment = {
   production: false,
-  huskycodeApiUrl: "https://localhost:8443/api"
+  huskycodeApiUrl: "https://localhost:8443/api",
+  stripePublishableKey: "pk_test_51LvPuWGKex0FhnSWR443AQq9fPnWv5l3OcZRvAQKFgSivDWcDiPVBUBBjEkkIkA9wP5mBXLGVAqkQDajREQcHuHs00c7g2p1nF"
 };
 
 /*
