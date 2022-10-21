@@ -4,12 +4,14 @@ import { Router } from '@angular/router';
 import { Country } from 'src/app/common/country';
 import { Order } from 'src/app/common/order';
 import { OrderItem } from 'src/app/common/order-item';
+import { PaymentInfo } from 'src/app/common/payment-info';
 import { Purchase } from 'src/app/common/purchase';
 import { State } from 'src/app/common/state';
 import { CartService } from 'src/app/services/cart.service';
 import { CheckoutService } from 'src/app/services/checkout.service';
 import { HuskyShopFormService } from 'src/app/services/husky-shop-form-service.service';
 import { HuskyShopValidators } from 'src/app/validators/husky-shop-validators';
+import { environment } from 'src/environments/environment';
 
 @Component({
   selector: 'app-checkout',
@@ -33,6 +35,13 @@ export class CheckoutComponent implements OnInit {
 
   storage :Storage= sessionStorage;
   
+  // initialize stripe API
+  stripe = Stripe(environment.stripePublishableKey);
+
+  paymentInfo : PaymentInfo = new PaymentInfo();
+  cardElememt: any;
+  displayError: any ="";
+
 
   constructor(private formBuilder: FormBuilder,
               private huskyShopFormService: HuskyShopFormService,
