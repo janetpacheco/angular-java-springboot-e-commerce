@@ -51,7 +51,10 @@ export class CheckoutComponent implements OnInit {
 
   ngOnInit(): void {
 
+
     this.reviewCartDetails();
+
+    this.setupStripePaymentForm();
 
     //read from browser storage
     const theEmail = JSON.parse(this.storage.getItem('userEmail')!);
@@ -107,6 +110,7 @@ export class CheckoutComponent implements OnInit {
         }),
 
         creditCardInfo : this.formBuilder.group({
+          /*
           cardType: new FormControl('',Validators.required),
           cardName: new FormControl('',[Validators.required,
                                         Validators.minLength(2),
@@ -121,10 +125,13 @@ export class CheckoutComponent implements OnInit {
                                             HuskyShopValidators.notOnlyWhitespace]),
           expMonth: [''],
           expYear: ['']
+          */
         })
       }
     );
 
+    /*
+    // populate credit card months and years
     const startMonth: number = new Date().getMonth() + 1;
     console.log("start month: "+ startMonth);
 
@@ -147,9 +154,36 @@ export class CheckoutComponent implements OnInit {
         console.log("Retrieve countries: " + JSON.stringify(data));
         this.countries = data;
       }
-    );
+    );*/
 
   }
+
+  setupStripePaymentForm() {
+    //handle stripe elements
+    var elements = this.stripe.elements();
+    
+    //costumize card element
+    this.cardElememt = elements.create('card',{hidePostalCode : true});
+    
+    // instance of card UI comp into the card-element html
+    this.cardElememt.mount('#card-element');
+    
+    // event binding for the 'change' event on card element
+    this.cardElememt.on('change',(event:any) =>{
+      
+      // get a handle to card errors elements
+      this.displayError = document.getElementById('card-errors');
+
+      if(event.complete){
+        this.displayError.textContent = "";
+      } else if(event.error){
+        this.displayError.textContent = event.error.message;
+      }
+
+    });
+    ;
+  }
+  
   reviewCartDetails() {
     // subcribe to cartService total quantity and price
     this.cartService.totalPrice.subscribe(
@@ -331,4 +365,8 @@ export class CheckoutComponent implements OnInit {
       }
     );
   }
+
+  
+
+
 }
