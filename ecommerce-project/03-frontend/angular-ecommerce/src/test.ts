@@ -7,7 +7,8 @@ import {
   platformBrowserDynamicTesting
 } from '@angular/platform-browser-dynamic/testing';
 
-declare const require: {
+declare const require:
+{
   context(path: string, deep?: boolean, filter?: RegExp): {
     <T>(id: string): T;
     keys(): string[];

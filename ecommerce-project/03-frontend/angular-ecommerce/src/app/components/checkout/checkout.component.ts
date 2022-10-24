@@ -1,4 +1,4 @@
-import { Component, OnInit } from '@angular/core';
+import { Component, ElementRef, OnInit } from '@angular/core';
 import { FormBuilder, FormControl, FormGroup, Validators } from '@angular/forms';
 import { Router } from '@angular/router';
 import { Country } from 'src/app/common/country';
@@ -39,9 +39,8 @@ export class CheckoutComponent implements OnInit {
   stripe = Stripe(environment.stripePublishableKey);
 
   paymentInfo : PaymentInfo = new PaymentInfo();
-  cardElememt: any;
+  cardElement: any;
   displayError: any ="";
-
 
   constructor(private formBuilder: FormBuilder,
               private huskyShopFormService: HuskyShopFormService,
@@ -51,10 +50,9 @@ export class CheckoutComponent implements OnInit {
 
   ngOnInit(): void {
 
-
-    this.reviewCartDetails();
-
     this.setupStripePaymentForm();
+
+    this.reviewCartDetails();    
 
     //read from browser storage
     const theEmail = JSON.parse(this.storage.getItem('userEmail')!);
@@ -66,6 +64,7 @@ export class CheckoutComponent implements OnInit {
                                        [Validators.required,
                                         Validators.minLength(2), 
                                         HuskyShopValidators.notOnlyWhitespace]),
+
           lastName: new FormControl('',[Validators.required,
                                         Validators.minLength(2),
                                         HuskyShopValidators.notOnlyWhitespace]),
@@ -131,7 +130,7 @@ export class CheckoutComponent implements OnInit {
     );
 
     /*
-    // populate credit card months and years
+    // populate credit card months 
     const startMonth: number = new Date().getMonth() + 1;
     console.log("start month: "+ startMonth);
 
@@ -142,34 +141,36 @@ export class CheckoutComponent implements OnInit {
       }
     );
 
+    // populate credit card and years
     this.huskyShopFormService.getCreditCardYears().subscribe(
       data => {
         console.log("retrieve credit card years: " + JSON.stringify(data));
         this.creditCardYears = data;
       }
-    );
+    );*/
 
+    // populate countries
     this.huskyShopFormService.getCountries().subscribe(
       data => {
         console.log("Retrieve countries: " + JSON.stringify(data));
         this.countries = data;
       }
-    );*/
-
+    );
   }
 
   setupStripePaymentForm() {
+
     //handle stripe elements
     var elements = this.stripe.elements();
     
     //costumize card element
-    this.cardElememt = elements.create('card',{hidePostalCode : true});
+    this.cardElement = elements.create('card',{hidePostalCode : true});
     
     // instance of card UI comp into the card-element html
-    this.cardElememt.mount('#card-element');
+    this.cardElement.mount('#card-element');
     
     // event binding for the 'change' event on card element
-    this.cardElememt.on('change',(event:any) =>{
+    this.cardElement.on('change',(event) =>{
       
       // get a handle to card errors elements
       this.displayError = document.getElementById('card-errors');
@@ -181,14 +182,13 @@ export class CheckoutComponent implements OnInit {
       }
 
     });
-    ;
+    
   }
   
   reviewCartDetails() {
     // subcribe to cartService total quantity and price
     this.cartService.totalPrice.subscribe(
-      totalPrice => this.totalPrice = totalPrice
-    );
+      totalPrice => this.totalPrice = totalPrice);
     this.cartService.totalQuantity.subscribe(
       totalQuantity => this.totalQuantity = totalQuantity);
   }
@@ -214,35 +214,8 @@ export class CheckoutComponent implements OnInit {
   get creditCardNumber(){ return this.checkoutFormGroup.get('creditCardInfo.cardNumber');}
   get creditSecurityCode(){ return this.checkoutFormGroup.get('creditCardInfo.securityCode');}
 
-   handleMonthsAndYears(){
-    const creditCardFormGroup = this.checkoutFormGroup.get('creditCardInfo');
-    const currentYear : number = new Date().getFullYear();
-    const selectedYear : number = Number(creditCardFormGroup.value.expYear);
-
-    let startMonth: number;
-
-    if ( currentYear === selectedYear){
-      startMonth = new Date().getMonth() + 1 ;
-    }else{
-      startMonth = 1;
-    }
-
-    this.huskyShopFormService.getCreditCardMonths(startMonth).subscribe(
-      data => {
-        console.log("Retrieved credit card months: " + JSON.stringify(data));
-        this.creditCardMonths = data ;
-      }
-    );
-
-    // populate countries
-    this.huskyShopFormService.getCountries().subscribe(
-      data => {
-        console.log("Retrieved countries: " + JSON.stringify(data));
-        this.countries = data ;
-      }
-    );
-  }
-
+  
+  
   copyShippingAdressToBillingAddress(event){
 
     if(event.target.checked){
@@ -253,24 +226,31 @@ export class CheckoutComponent implements OnInit {
 
     else{
       this.checkoutFormGroup.controls['billingAddress'].reset();
+
+      // bug fix for states
       this.billingAddressStates = [];
     }
   }
 
+
   onSubmit(){
+
     console.log("Handling the submit button");
+
     if (this.checkoutFormGroup.invalid){
       this.checkoutFormGroup.markAllAsTouched();
       return;
     }
-    console.log(this.checkoutFormGroup.get('customer').value)
-    console.log("The email address is "+ this.checkoutFormGroup.get('customer').value.email);
-    
-    console.log("The shipping address country is " + this.checkoutFormGroup.get('shippingAddress').value.country.name);
-    console.log("The shipping address state is " + this.checkoutFormGroup.get('shippingAddress').value.state.name);
 
-    console.log("The billing address country is " + this.checkoutFormGroup.get('billingAddress').value.country.name);
-    console.log("The billing address state is " + this.checkoutFormGroup.get('billingAddress').value.state.name);
+
+    // console.log(this.checkoutFormGroup.get('customer').value)
+    // console.log("The email address is "+ this.checkoutFormGroup.get('customer').value.email);
+    
+    // console.log("The shipping address country is " + this.checkoutFormGroup.get('shippingAddress').value.country.name);
+    // console.log("The shipping address state is " + this.checkoutFormGroup.get('shippingAddress').value.state.name);
+
+    // console.log("The billing address country is " + this.checkoutFormGroup.get('billingAddress').value.country.name);
+    // console.log("The billing address state is " + this.checkoutFormGroup.get('billingAddress').value.state.name);
 
     let order = new Order();
     order.totalPrice = this.totalPrice;
@@ -311,7 +291,14 @@ export class CheckoutComponent implements OnInit {
     purchase.order = order ;   
     purchase.orderItems = orderItems;
 
-    // call Rest API via CheckoutService
+    //exchange dollar to cents of dollars
+    this.paymentInfo.amount = Math.round(this.totalPrice*100);
+
+    this.paymentInfo.currency = "USD";
+    console.log(`this.paymentInfo.amount: ${this.paymentInfo.amount}`);
+
+    /*
+    // call REST API via CheckoutService without stripe 
     this.checkoutService.placeOrder(purchase).subscribe(
       {
         next: reponse =>{
@@ -323,10 +310,47 @@ export class CheckoutComponent implements OnInit {
           alert(`There was an error: ${err.message}`);
         }
       }
-    );
+    );*/
 
+    //
 
+    if (!this.checkoutFormGroup.invalid && this.displayError.textContent === "") {
+
+      this.checkoutService.createPaymentIntent(this.paymentInfo).subscribe(
+        (paymentIntentResponse) => {
+          this.stripe.confirmCardPayment(paymentIntentResponse.client_secret,
+            {
+              payment_method: {
+                card: this.cardElement
+              }
+            }, { handleActions: false })
+          .then(function(result) {
+            if (result.error) {
+              // inform the customer there was an error
+              alert(`There was an error: ${result.error.message}`);
+            } else {
+              // call REST API via the CheckoutService
+              this.checkoutService.placeOrder(purchase).subscribe({
+                next: response => {
+                  alert(`Your order has been received.\nOrder tracking number: ${response.orderTrackingNumber}`);
+
+                  // reset cart
+                  this.resetCart();
+                },
+                error: err => {
+                  alert(`There was an error: ${err.message}`);
+                }
+              })
+            }            
+          }.bind(this));
+        }
+      );
+    } else {
+      this.checkoutFormGroup.markAllAsTouched();
+      return;
+    }
   }  
+
   resetCart() {
     // cart data
     this.cartService.cartItems = [];
@@ -340,6 +364,30 @@ export class CheckoutComponent implements OnInit {
     this.router.navigateByUrl("/products");
   }
 
+
+  /*
+  handleMonthsAndYears(){
+    const creditCardFormGroup = this.checkoutFormGroup.get('creditCardInfo');
+    const currentYear : number = new Date().getFullYear();
+    const selectedYear : number = Number(creditCardFormGroup.value.expYear);
+
+    let startMonth: number;
+
+    if ( currentYear === selectedYear){
+      startMonth = new Date().getMonth() + 1 ;
+    }else{
+      startMonth = 1;
+    }
+
+    this.huskyShopFormService.getCreditCardMonths(startMonth).subscribe(
+      data => {
+        console.log("Retrieved credit card months: " + JSON.stringify(data));
+        this.creditCardMonths = data ;
+      }
+    );    
+  }*/
+
+  
   getStates(formGroupName: string) {
 
     const formGroup = this.checkoutFormGroup.get(formGroupName);
@@ -365,8 +413,4 @@ export class CheckoutComponent implements OnInit {
       }
     );
   }
-
-  
-
-
 }
