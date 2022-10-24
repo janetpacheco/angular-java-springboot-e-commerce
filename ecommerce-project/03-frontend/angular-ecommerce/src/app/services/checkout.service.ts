@@ -10,18 +10,17 @@ import { Purchase } from '../common/purchase';
 })
 export class CheckoutService {
    
-  private purchaseUrl = environment.huskycodeApiUrl + "/checkout/purchase";
-  private paymentIntentUrl = environment.huskycodeApiUrl + "/checkout-payment-intent";
+  private purchaseUrl = environment.huskycodeApiUrl + '/checkout/purchase';
+  private paymentIntentUrl = environment.huskycodeApiUrl + '/checkout/payment-intent';
 
   constructor(private httpClient: HttpClient) { }
-
-  createPaymentIntent(paymentInfo: PaymentInfo) : Observable<any>{
-    return this.httpClient.post<PaymentInfo>(this.paymentIntentUrl,paymentInfo);
-  }
 
   placeOrder(purchase:Purchase): Observable<any>{
     return this.httpClient.post<Purchase>(this.purchaseUrl,purchase)
   }
 
+  createPaymentIntent(paymentInfo: PaymentInfo) : Observable<any>{
+    return this.httpClient.post<PaymentInfo>(this.paymentIntentUrl,paymentInfo);
+  }
 
 }
