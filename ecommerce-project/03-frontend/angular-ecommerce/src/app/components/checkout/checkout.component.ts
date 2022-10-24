@@ -299,6 +299,8 @@ export class CheckoutComponent implements OnInit {
     this.paymentInfo.currency = "USD";
     console.log(`this.paymentInfo.amount: ${this.paymentInfo.amount}`);
 
+    this.paymentInfo.receiptEmail = purchase.customer.email;
+
     /*
     // call REST API via CheckoutService without stripe 
     this.checkoutService.placeOrder(purchase).subscribe(
