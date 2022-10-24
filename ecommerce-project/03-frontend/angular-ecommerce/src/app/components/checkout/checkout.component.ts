@@ -356,6 +356,8 @@ export class CheckoutComponent implements OnInit {
     this.cartService.cartItems = [];
     this.cartService.totalPrice.next(0);
     this.cartService.totalQuantity.next(0);
+    // empty the cart after reloading page and after checkingout 
+    this.cartService.persistCartItems();
 
     // form data
     this.checkoutFormGroup.reset();
