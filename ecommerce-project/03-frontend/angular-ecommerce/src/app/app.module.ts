@@ -29,13 +29,10 @@ import { MembersPageComponent } from './components/members-page/members-page.com
 import { OrderHistoryComponent } from './components/order-history/order-history.component';
 import { AuthInterceptorService } from './services/auth-interceptor.service';
 
-const oktaConfig = myAppConfig.oidc;
-const oktaAuth = new OktaAuth(oktaConfig);
 
-function onAuthRequired(oktaAuth, injector) {
-  // Use injector to access any service available within your application
-  const router = injector.get(Router);
-}
+const oktaConfig = myAppConfig.oidc;
+
+const oktaAuth = new OktaAuth(oktaConfig);
 
 function sendToLoginPage(oktaAuth: OktaAuth, injector: Injector) {
   // Use injector to access any service available within your application
@@ -44,6 +41,14 @@ function sendToLoginPage(oktaAuth: OktaAuth, injector: Injector) {
   // Redirect the user to your custom login page
   router.navigate(['/login']);
 }
+
+
+// function onAuthRequired(oktaAuth, injector) {
+//   // Use injector to access any service available within your application
+//   const router = injector.get(Router);
+// }
+
+
 
 // const oktaAuth = new OktaAuth({ ... });
 
@@ -54,8 +59,6 @@ function sendToLoginPage(oktaAuth: OktaAuth, injector: Injector) {
 //   // router.navigate(['/login']);
 
 // }
-
-
 
 // 1. Define your routes going from the most specific to the most generic
 const routes: Routes =[
